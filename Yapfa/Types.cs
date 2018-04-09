@@ -6,19 +6,6 @@ using System.Threading.Tasks;
 
 namespace Yapfa
 {
-    class Account
-    {
-        enum AccountType
-        {
-            Bank,
-            Cash
-        }
-        AccountType Type { get; set; }
-        string Currency { get; set; }
-        decimal InitialBalance { get; set; }
-        string Name { get; set; }
-    }
-
     class Category
     {
         string Name { get; set; }

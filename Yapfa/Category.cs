@@ -10,9 +10,4 @@ namespace Yapfa
     {
         string Name { get; set; }
     }
-
-    class Payee
-    {
-         string Name { get; set; }
-    }
 }

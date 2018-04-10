@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Yapfa
 {
-    class Category
+    public class Category
     {
         string Name { get; set; }
     }

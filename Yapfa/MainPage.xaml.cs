@@ -20,7 +20,7 @@ using WinRTXamlToolkit.Controls.DataVisualization.Charting;
 
 namespace Yapfa
 {
-    public class FinancialStuff
+    public class PieSegment
     {
         public string Name { get; set; }
         public int Amount { get; set; }
@@ -50,7 +50,7 @@ namespace Yapfa
             AccountTable.ItemsSource = accountsList;
             TransactionsTable.ItemsSource = transactionsList;
 
-            LoadChartContents();
+            UpdateChart();
         }
 
         /// <summary>
@@ -143,23 +143,29 @@ namespace Yapfa
         {
             transactionsList.Add(transaction);
 
-            for (var i = 0; i < accountsList.Count; i++) {
-                if(accountsList[i].Name == transaction.Account)
+            for (var i = 0; i < accountsList.Count; i++)
+            {
+                if (accountsList[i].Name == transaction.Account)
                 {
                     accountsList[i].Balance += transaction.Amount;
                 }
             }
         }
 
-        private void LoadChartContents()
+        private void UpdateChart()
         {
             // TODO Generate category totals for income/expenditure from transactions
-            Random rand = new Random();
-            List<FinancialStuff> financialStuffList = new List<FinancialStuff>();
-            financialStuffList.Add(new FinancialStuff() { Name = "Name1", Amount = rand.Next(0, 200) });
-            financialStuffList.Add(new FinancialStuff() { Name = "Name2", Amount = rand.Next(0, 200) });
-            financialStuffList.Add(new FinancialStuff() { Name = "Name3", Amount = rand.Next(0, 200) });
-            financialStuffList.Add(new FinancialStuff() { Name = "Name4", Amount = rand.Next(0, 200) });
+            List<PieSegment> financialStuffList = new List<PieSegment>();
+            
+            foreach (Transaction transaction in transactionsList)
+            {
+                if (transaction.Amount < 0 && transaction.Category.Length > 0)
+                {
+                    // TODO check if category is already present, add to value if true
+                    financialStuffList.Add(new PieSegment() { Name = transaction.Category, Amount = (int) transaction.Amount });
+                }
+            }
+
             (PieChart.Series[0] as PieSeries).ItemsSource = financialStuffList;
         }
     }

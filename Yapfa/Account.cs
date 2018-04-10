@@ -14,7 +14,7 @@ namespace Yapfa
             Bank,
             Cash
         }
-       public AccountType Type { get; set; }
+        public AccountType Type { get; set; }
         public string Currency { get; set; }
         public decimal InitialBalance { get; set; }
         public string Name { get; set; }

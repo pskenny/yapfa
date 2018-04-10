@@ -5,9 +5,107 @@
     xmlns:local="using:Yapfa"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    xmlns:Charting="using:WinRTXamlToolkit.Controls.DataVisualization.Charting">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid x:Name="ParentGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
+        <ListView x:Name="AccountsList" ItemsSource="{Binding Path=Accounts}">
+            <ListView.HeaderTemplate>
+                <DataTemplate>
+                    <Grid Padding="12">
+                        <Grid.ColumnDefinitions>
+                            <!-- Change to use relative sizing -->
+                            <ColumnDefinition Width="408"/>
+                            <ColumnDefinition Width="360"/>
+                            <ColumnDefinition Width="360"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Name" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                        <TextBlock Grid.Column="1" Text="Type" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                        <TextBlock Grid.Column="2" Text="Currency" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.HeaderTemplate>
+            <ListView.ItemTemplate>
+                <DataTemplate x:Name="TableDataTemplate" x:DataType="local:Account">
+                    <Grid Height="48" AutomationProperties.Name="{x:Bind Name}">
+                        <Grid.ColumnDefinitions>
+                            <!-- Change to use relative sizing -->
+                            <ColumnDefinition Width="48"/>
+                            <ColumnDefinition Width="360"/>
+                            <ColumnDefinition Width="360"/>
+                            <ColumnDefinition Width="360"/>
+                        </Grid.ColumnDefinitions>
+                        <Ellipse Height="32" Width="32" VerticalAlignment="Center">
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="Placeholder.png"/>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <TextBlock Grid.Column="1" VerticalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}" Text="{x:Bind Name}" />
+                        <TextBlock Grid.Column="2" VerticalAlignment="Center" Text="{x:Bind Type}"/>
+                        <TextBlock Grid.Column="3" VerticalAlignment="Center" Text="{x:Bind Currency}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <ListView x:Name="TransactionsList" ItemsSource="{Binding Path=Transactions}" Grid.Row="1" Grid.ColumnSpan="2">
+            <ListView.HeaderTemplate>
+                <DataTemplate>
+                    <Grid Padding="12">
+                        <Grid.ColumnDefinitions>
+                            <!-- Change to use relative sizing -->
+                            <ColumnDefinition Width="408"/>
+                            <ColumnDefinition Width="360"/>
+                            <ColumnDefinition Width="360"/>
+                            <ColumnDefinition Width="360"/>
+                            <ColumnDefinition Width="360"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Date" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                        <TextBlock Grid.Column="1" Text="Payee" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                        <TextBlock Grid.Column="2" Text="Category" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                        <TextBlock Grid.Column="3" Text="Amount" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                        <TextBlock Grid.Column="4" Text="Memo" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.HeaderTemplate>
+            <ListView.ItemTemplate>
+                <DataTemplate x:Name="TransactionTableDataTemplate" x:DataType="local:Transaction">
+                    <Grid Height="48">
+                        <Grid.ColumnDefinitions>
+                            <!-- Change to use relative sizing, add all columns -->
+                            <ColumnDefinition Width="48"/>
+                            <ColumnDefinition Width="360"/>
+                            <ColumnDefinition Width="360"/>
+                            <ColumnDefinition Width="360"/>
+                            <ColumnDefinition Width="360"/>
+                            <ColumnDefinition Width="360"/>
+                        </Grid.ColumnDefinitions>
+                        <Ellipse Height="32" Width="32" VerticalAlignment="Center">
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="Placeholder.png"/>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <TextBlock Grid.Column="1" VerticalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}" Text="{x:Bind Date}" />
+                        <TextBlock Grid.Column="2" VerticalAlignment="Center" Text="{x:Bind Payee}"/>
+                        <TextBlock Grid.Column="3" VerticalAlignment="Center" Text="{x:Bind Category}"/>
+                        <TextBlock Grid.Column="4" VerticalAlignment="Center" Text="{x:Bind Amount}"/>
+                        <TextBlock Grid.Column="5" VerticalAlignment="Center" Text="{x:Bind Memo}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Charting:Chart Grid.Column="1" x:Name="PieChart" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100,100,0,0" Width="400" Height="400">
+            <Charting:PieSeries Margin="0" IndependentValuePath="Name" DependentValuePath="Amount" IsSelectionEnabled="True"/>
+        </Charting:Chart>
     </Grid>
 </Page>

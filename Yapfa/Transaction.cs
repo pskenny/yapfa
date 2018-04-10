@@ -8,6 +8,7 @@ namespace Yapfa
 {
     class Transaction
     {
+        public string Account { get; set; }
         public DateTime Date { get; set; }
         public string Payee { get; set; }
         public string Category { get; set; }

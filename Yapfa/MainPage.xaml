@@ -6,7 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    xmlns:Charting="using:WinRTXamlToolkit.Controls.DataVisualization.Charting">
+    xmlns:Charting="using:WinRTXamlToolkit.Controls.DataVisualization.Charting"
+    xmlns:controls="using:MyToolkit.Controls">
 
     <Grid x:Name="ParentGrid">
         <Grid.ColumnDefinitions>
@@ -18,93 +19,64 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <ListView x:Name="AccountsList" ItemsSource="{Binding Path=Accounts}">
-            <ListView.HeaderTemplate>
-                <DataTemplate>
-                    <Grid Padding="12">
-                        <Grid.ColumnDefinitions>
-                            <!-- Change to use relative sizing -->
-                            <ColumnDefinition Width="408"/>
-                            <ColumnDefinition Width="360"/>
-                            <ColumnDefinition Width="360"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Name" Style="{ThemeResource CaptionTextBlockStyle}"/>
-                        <TextBlock Grid.Column="1" Text="Type" Style="{ThemeResource CaptionTextBlockStyle}"/>
-                        <TextBlock Grid.Column="2" Text="Currency" Style="{ThemeResource CaptionTextBlockStyle}"/>
-                    </Grid>
-                </DataTemplate>
-            </ListView.HeaderTemplate>
-            <ListView.ItemTemplate>
-                <DataTemplate x:Name="TableDataTemplate" x:DataType="local:Account">
-                    <Grid Height="48" AutomationProperties.Name="{x:Bind Name}">
-                        <Grid.ColumnDefinitions>
-                            <!-- Change to use relative sizing -->
-                            <ColumnDefinition Width="48"/>
-                            <ColumnDefinition Width="360"/>
-                            <ColumnDefinition Width="360"/>
-                            <ColumnDefinition Width="360"/>
-                        </Grid.ColumnDefinitions>
-                        <Ellipse Height="32" Width="32" VerticalAlignment="Center">
-                            <Ellipse.Fill>
-                                <ImageBrush ImageSource="Placeholder.png"/>
-                            </Ellipse.Fill>
-                        </Ellipse>
-                        <TextBlock Grid.Column="1" VerticalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}" Text="{x:Bind Name}" />
-                        <TextBlock Grid.Column="2" VerticalAlignment="Center" Text="{x:Bind Type}"/>
-                        <TextBlock Grid.Column="3" VerticalAlignment="Center" Text="{x:Bind Currency}"/>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <controls:DataGrid x:Name="AccountTable" SelectionMode="Single" DefaultOrderIndex="1">
+            <controls:DataGrid.Columns>
+                <controls:DataGridTextColumn Width="*" Header="Name" 
+                  Binding="{Binding Name}"
+                  d:DataContext="{d:DesignInstance Type=models:Account}" />
+                <controls:DataGridTextColumn Width="*" Header="Type" Binding="{Binding Type}" 
+                  d:DataContext="{d:DesignInstance Type=models:Account}" />
+                <controls:DataGridTextColumn Width="*" Header="Balance" Binding="{Binding Balance}" 
+                  d:DataContext="{d:DesignInstance Type=models:Account}" />
+            </controls:DataGrid.Columns>
 
-        <ListView x:Name="TransactionsList" ItemsSource="{Binding Path=Transactions}" Grid.Row="1" Grid.ColumnSpan="2">
-            <ListView.HeaderTemplate>
+            <controls:DataGrid.ItemDetailsTemplate>
                 <DataTemplate>
-                    <Grid Padding="12">
-                        <Grid.ColumnDefinitions>
-                            <!-- Change to use relative sizing -->
-                            <ColumnDefinition Width="408"/>
-                            <ColumnDefinition Width="360"/>
-                            <ColumnDefinition Width="360"/>
-                            <ColumnDefinition Width="360"/>
-                            <ColumnDefinition Width="360"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Date" Style="{ThemeResource CaptionTextBlockStyle}"/>
-                        <TextBlock Grid.Column="1" Text="Payee" Style="{ThemeResource CaptionTextBlockStyle}"/>
-                        <TextBlock Grid.Column="2" Text="Category" Style="{ThemeResource CaptionTextBlockStyle}"/>
-                        <TextBlock Grid.Column="3" Text="Amount" Style="{ThemeResource CaptionTextBlockStyle}"/>
-                        <TextBlock Grid.Column="4" Text="Memo" Style="{ThemeResource CaptionTextBlockStyle}"/>
-                    </Grid>
+                    <StackPanel Margin="10,10,10,5" 
+                        d:DataContext="{d:DesignInstance Type=models:Account}">
+                        <TextBlock Text="{Binding Name}" FontWeight="Bold" />
+                        <TextBlock Text="{Binding Type}" />
+                        <TextBlock Text="{Binding Balance}" />
+                    </StackPanel>
                 </DataTemplate>
-            </ListView.HeaderTemplate>
-            <ListView.ItemTemplate>
-                <DataTemplate x:Name="TransactionTableDataTemplate" x:DataType="local:Transaction">
-                    <Grid Height="48">
-                        <Grid.ColumnDefinitions>
-                            <!-- Change to use relative sizing, add all columns -->
-                            <ColumnDefinition Width="48"/>
-                            <ColumnDefinition Width="360"/>
-                            <ColumnDefinition Width="360"/>
-                            <ColumnDefinition Width="360"/>
-                            <ColumnDefinition Width="360"/>
-                            <ColumnDefinition Width="360"/>
-                        </Grid.ColumnDefinitions>
-                        <Ellipse Height="32" Width="32" VerticalAlignment="Center">
-                            <Ellipse.Fill>
-                                <ImageBrush ImageSource="Placeholder.png"/>
-                            </Ellipse.Fill>
-                        </Ellipse>
-                        <TextBlock Grid.Column="1" VerticalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}" Text="{x:Bind Date}" />
-                        <TextBlock Grid.Column="2" VerticalAlignment="Center" Text="{x:Bind Payee}"/>
-                        <TextBlock Grid.Column="3" VerticalAlignment="Center" Text="{x:Bind Category}"/>
-                        <TextBlock Grid.Column="4" VerticalAlignment="Center" Text="{x:Bind Amount}"/>
-                        <TextBlock Grid.Column="5" VerticalAlignment="Center" Text="{x:Bind Memo}"/>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            </controls:DataGrid.ItemDetailsTemplate>
+        </controls:DataGrid>
 
-        <Charting:Chart Grid.Column="1" x:Name="PieChart" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100,100,0,0" Width="400" Height="400">
+        <controls:DataGrid x:Name="TransactionsTable" SelectionMode="Single" DefaultOrderIndex="1" Grid.Row="1" Grid.ColumnSpan="2">
+            <controls:DataGrid.Columns>
+                <controls:DataGridTextColumn Width="*" Header="Date" 
+                  Binding="{Binding Date}"
+                  d:DataContext="{d:DesignInstance Type=models:Transaction}" />
+                <controls:DataGridTextColumn Width="*" Header="Payee" 
+                  Binding="{Binding Payee}"
+                  d:DataContext="{d:DesignInstance Type=models:Transaction}" />
+                <controls:DataGridTextColumn Width="*" Header="Category" 
+                  Binding="{Binding Category}"
+                  d:DataContext="{d:DesignInstance Type=models:Transaction}" />
+                <controls:DataGridTextColumn Width="*" Header="Amount" 
+                  Binding="{Binding Amount}"
+                  d:DataContext="{d:DesignInstance Type=models:Transaction}" />
+                <controls:DataGridTextColumn Width="*" Header="Memo" 
+                  Binding="{Binding Memo}"
+                  d:DataContext="{d:DesignInstance Type=models:Transaction}" />
+            </controls:DataGrid.Columns>
+
+            <controls:DataGrid.ItemDetailsTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="10,10,10,5" 
+                        d:DataContext="{d:DesignInstance Type=models:Account}">
+                        <TextBlock Text="{Binding Date}" FontWeight="Bold" />
+                        <TextBlock Text="{Binding Payee}" />
+                        <TextBlock Text="{Binding Category}" />
+                        <TextBlock Text="{Binding Amount}" />
+                        <TextBlock Text="{Binding Memo}" />
+                    </StackPanel>
+                </DataTemplate>
+            </controls:DataGrid.ItemDetailsTemplate>
+        </controls:DataGrid>
+
+        <Charting:Chart Grid.Column="1" x:Name="PieChart" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                        Margin="100,100,0,0" Width="400" Height="400">
             <Charting:PieSeries Margin="0" IndependentValuePath="Name" DependentValuePath="Amount" IsSelectionEnabled="True"/>
         </Charting:Chart>
     </Grid>

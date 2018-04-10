@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Yapfa
 {
-    class Payee
+    public class Payee
     {
-        string Name { get; set; }
+        public string Name { get; set; }
     }
 }

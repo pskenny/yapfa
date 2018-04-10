@@ -31,8 +31,9 @@ namespace Yapfa
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        ObservableCollection<Account> accountsDataList;
-        ObservableCollection<Transaction> transactionsDataList;
+        ObservableCollection<Account> accountsList;
+        ObservableCollection<Transaction> transactionsList;
+
 
         public MainPage()
         {
@@ -46,8 +47,8 @@ namespace Yapfa
             LoadData();
 
             // Set item sources
-            AccountsList.ItemsSource = accountsDataList;
-            TransactionsList.ItemsSource = transactionsDataList;
+            AccountTable.ItemsSource = accountsList;
+            TransactionsTable.ItemsSource = transactionsList;
 
             LoadChartContents();
         }
@@ -57,34 +58,57 @@ namespace Yapfa
         /// </summary>
         private void LoadData()
         {
-            accountsDataList = new ObservableCollection<Account>();
-            transactionsDataList = new ObservableCollection<Transaction>();
+            accountsList = new ObservableCollection<Account>();
+            transactionsList = new ObservableCollection<Transaction>();
 
             // Load test data if in debug mode
 #if DEBUG
             // Make test accounts
-            Account acc1 = new Account()
+            Account account1 = new Account()
             {
                 Name = "Wallet",
                 Type = Account.AccountType.Cash,
+                InitialBalance = 3.50M,
                 Currency = "Euro"
             };
-            Account acc2 = new Account()
+            Account account2 = new Account()
             {
-                Name = "Bank",
+                Name = "Current Account",
                 Type = Account.AccountType.Bank,
+                InitialBalance = 200,
                 Currency = "Euro"
             };
 
-            accountsDataList.Add(acc1);
-            accountsDataList.Add(acc2);
-      
+            accountsList.Add(account1);
+            accountsList.Add(account2);
+
             // Make test transactions
+            Transaction tr1 = new Transaction()
+            {
+                Account = account2.Name,
+                Date = new DateTime(),
+                Payee = "Employer Co.",
+                Category = "Wage",
+                Amount = (decimal) 1000,
+                Memo = "Work"
+            };
 
-
+            AddTransaction(tr1);
 #else
             // Load real data, previous instance if available
 #endif
+        }
+
+        void AddTransaction(Transaction transaction)
+        {
+            transactionsList.Add(transaction);
+
+            for (var i = 0; i < accountsList.Count; i++) {
+                if(accountsList[i].Name == transaction.Account)
+                {
+                    accountsList[i].Balance += transaction.Amount;
+                }
+            }
         }
 
         private void LoadChartContents()

@@ -75,7 +75,7 @@ namespace Yapfa
             {
                 Name = "Current Account",
                 Type = Account.AccountType.Bank,
-                InitialBalance = 200,
+                InitialBalance = 200M,
                 Currency = "Euro"
             };
 
@@ -89,11 +89,51 @@ namespace Yapfa
                 Date = new DateTime(),
                 Payee = "Employer Co.",
                 Category = "Wage",
-                Amount = (decimal) 1000,
+                Amount = 1000,
                 Memo = "Work"
+            };
+            Transaction tr2 = new Transaction()
+            {
+                Account = account2.Name,
+                Date = new DateTime(),
+                Payee = "Landlord",
+                Category = "Rent",
+                Amount = -450M,
+                Memo = "Rent"
+            };
+            Transaction tr3 = new Transaction()
+            {
+                Account = account2.Name,
+                Date = new DateTime(),
+                Payee = "Eye Cinema",
+                Category = "Film",
+                Amount = -8M,
+                Memo = "Ready Player One"
+            };
+            Transaction tr4 = new Transaction()
+            {
+                Account = account1.Name,
+                Date = new DateTime(),
+                Payee = "Me",
+                Category = "Unexpected Income",
+                Amount = 2M,
+                Memo = "Found money"
+            };
+            Transaction tr5 = new Transaction()
+            {
+                Account = account1.Name,
+                Date = new DateTime(),
+                Payee = "Shop",
+                Category = "Drink",
+                Amount = -2M,
+                Memo = "Water"
             };
 
             AddTransaction(tr1);
+            AddTransaction(tr2);
+            AddTransaction(tr3);
+            AddTransaction(tr4);
+            AddTransaction(tr5);
 #else
             // Load real data, previous instance if available
 #endif

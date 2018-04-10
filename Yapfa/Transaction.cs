@@ -9,8 +9,8 @@ namespace Yapfa
     class Transaction
     {
         public DateTime Date { get; set; }
-        public Payee Payee { get; set; }
-        public Category Category { get; set; }
+        public string Payee { get; set; }
+        public string Category { get; set; }
         public decimal Amount { get; set; }
         public string Memo { get; set; }
     }

@@ -32,8 +32,6 @@ namespace Yapfa
     public sealed partial class MainPage : Page
     {
         ObservableCollection<Account> accountsDataList;
-        ObservableCollection<Payee> payeesDataList;
-        ObservableCollection<Category> categoriesDataList;
         ObservableCollection<Transaction> transactionsDataList;
 
         public MainPage()
@@ -60,8 +58,6 @@ namespace Yapfa
         private void LoadData()
         {
             accountsDataList = new ObservableCollection<Account>();
-            payeesDataList = new ObservableCollection<Payee>();
-            categoriesDataList = new ObservableCollection<Category>();
             transactionsDataList = new ObservableCollection<Transaction>();
 
             // Load test data if in debug mode
@@ -82,13 +78,7 @@ namespace Yapfa
 
             accountsDataList.Add(acc1);
             accountsDataList.Add(acc2);
-
-            // Make test categories and payees
-            Payee pay1 = new Payee()
-            {
-                Name = "Shop"
-            };
-
+      
             // Make test transactions
 
 

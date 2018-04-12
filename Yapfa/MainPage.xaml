@@ -50,11 +50,23 @@
                     </DataTemplate>
                 </controls:DataGrid.ItemDetailsTemplate>
             </controls:DataGrid>
-            
+
+            <!--TODO Add padding-->
             <StackPanel Grid.Row="1" Orientation="Horizontal">
-                <Button>Add</Button>
-                <Button>Edit</Button>
-                <Button>Remove</Button>
+                <Button x:Name="AddAccount" Content="Add" Tapped="AddAccount_Tapped">
+                    <Button.Resources>
+                        <Flyout x:Name="AddAccountFlyout">
+                            <!--TODO Add add contents-->
+                        </Flyout>
+                    </Button.Resources>
+                </Button>
+                <Button x:Name="RemoveAccount" Content="Remove" Tapped="RemoveAccount_Tapped">
+                    <Button.Resources>
+                        <Flyout x:Name="RemoveAccountFlyout">
+                            <!--TODO Add remove content-->
+                        </Flyout>
+                    </Button.Resources>
+                </Button>
             </StackPanel>
         </Grid>
 
@@ -101,16 +113,36 @@
             </controls:DataGrid.ItemDetailsTemplate>
             </controls:DataGrid>
 
+            <!--TODO Add padding-->
             <StackPanel Grid.Row="1" Orientation="Horizontal">
-                <Button>Add</Button>
-                <Button>Edit</Button>
-                <Button>Remove</Button>
+                <Button x:Name="AddTransactionButton" Content="Add" Tapped="AddTransaction_Tapped">
+                    <Button.Resources>
+                        <Flyout x:Name="AddTransactionFlyout">
+                            <!--TODO Add add contents-->
+                        </Flyout>
+                    </Button.Resources>
+                </Button>
+                <Button x:Name="RemoveTransactionButton" Content="Remove" Tapped="RemoveTransaction_Tapped">
+                    <Button.Resources>
+                        <Flyout x:Name="RemoveTransactionFlyout">
+                            <!--TODO Add remove content-->
+                        </Flyout>
+                    </Button.Resources>
+                </Button>
             </StackPanel>
         </Grid>
 
-        <Charting:Chart Grid.Column="1" x:Name="PieChart" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                        Margin="100,100,0,0" Width="400" Height="400">
-            <Charting:PieSeries Margin="0" IndependentValuePath="Name" DependentValuePath="Amount" IsSelectionEnabled="True"/>
-        </Charting:Chart>
+        <Grid Grid.Row="0" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <Charting:Chart x:Name="PieChart" HorizontalAlignment="Left" VerticalAlignment="Top" Title="Category Expenses">
+                <Charting:PieSeries Margin="0" IndependentValuePath="Name" DependentValuePath="Amount" IsSelectionEnabled="True"/>
+            </Charting:Chart>
+        </Grid>
     </Grid>
 </Page>

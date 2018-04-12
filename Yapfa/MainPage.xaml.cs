@@ -18,9 +18,6 @@ using WinRTXamlToolkit.Controls.DataVisualization.Charting;
 
 namespace Yapfa
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class MainPage : Page
     {
         private ObservableCollection<Account> AccountsList = new ObservableCollection<Account>();
@@ -36,16 +33,13 @@ namespace Yapfa
 
         void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            // TODO load settings
-            Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-            Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
-
             DisplayStartupDialog();
 
             // Set item sources
             AccountTable.ItemsSource = AccountsList;
             TransactionsTable.ItemsSource = TransactionsList;
 
+            // Update chart initially
             UpdateChart();
         }
 
@@ -56,19 +50,15 @@ namespace Yapfa
                 Title = "Hello",
                 Content = "What do you want to do?",
                 CloseButtonText = "Empty",
-                SecondaryButtonText = "Load Sample Data",
-                DefaultButton = ContentDialogButton.Secondary
+                PrimaryButtonText = "Load Sample Data",
+                DefaultButton = ContentDialogButton.Primary
             };
 
             ContentDialogResult result = await subscribeDialog.ShowAsync();
 
             if (result == ContentDialogResult.Primary)
             {
-                // TODO open dialog, open serialised data
-            }
-            else if (result == ContentDialogResult.Secondary)
-            {
-                // Load categories, payees, accounts and transactions
+                // Load categories, payees, accounts and transactions from sample data
                 LoadSampleData();
             }
         }
@@ -94,6 +84,7 @@ namespace Yapfa
                 Currency = "Euro"
             };
 
+            // Add test accounts
             AccountsList.Add(account1);
             AccountsList.Add(account2);
 
@@ -144,6 +135,7 @@ namespace Yapfa
                 Memo = "Water"
             };
 
+            // Add transactions
             AddTransaction(tr1);
             AddTransaction(tr2);
             AddTransaction(tr3);
@@ -167,14 +159,13 @@ namespace Yapfa
 
         private void UpdateChart()
         {
-            // TODO Generate category totals for income/expenditure from transactions
             List<PieSegment> financialStuffList = new List<PieSegment>();
 
             foreach (Transaction transaction in TransactionsList)
             {
                 if (transaction.Amount < 0 && transaction.Category.Length > 0)
                 {
-                    // TODO check if category is already present, add to value if true
+                    // Add new pie segment for every encountered expense in category
                     financialStuffList.Add(new PieSegment() { Name = transaction.Category, Amount = (int)transaction.Amount });
                 }
             }
@@ -184,13 +175,14 @@ namespace Yapfa
 
         private void TransactionListChange(object sender, NotifyCollectionChangedEventArgs e)
         {
+            // Update chart on transaction list change
             UpdateChart();
         }
 
         private void AddAccount_Tapped(object sender, TappedRoutedEventArgs e)
         {
             var button = sender as Button;
-
+            // Show flyout
             AddAccountFlyout.ShowAt(button);
         }
 
@@ -198,8 +190,10 @@ namespace Yapfa
         {
             var button = sender as Button;
 
+            // Make sure an account is selected
             if (AccountTable.SelectedItem != null)
             {
+                // Show flyout
                 RemoveAccountFlyout.ShowAt(button);
             }
         }
@@ -207,14 +201,14 @@ namespace Yapfa
         private void RemoveAccountConfirmation_Tapped(object sender, TappedRoutedEventArgs e)
         {
             var selected = AccountTable.SelectedItem;
-            // Remove selected transaction
+            // Remove flyout
             RemoveAccountFlyout.Hide();
         }
 
         private void AddTransaction_Tapped(object sender, TappedRoutedEventArgs e)
         {
             var button = sender as Button;
-
+            // Show flyout
             AddTransactionFlyout.ShowAt(button);
         }
 
@@ -222,8 +216,10 @@ namespace Yapfa
         {
             var button = sender as Button;
 
+            // Make sure a transaction is selected
             if (TransactionsTable.SelectedItem != null)
             {
+                // Show flyout
                 RemoveTransactionFlyout.ShowAt(button);
             }
         }
@@ -231,10 +227,10 @@ namespace Yapfa
         private void RemoveTransactionConfirmation_Tapped(object sender, TappedRoutedEventArgs e)
         {
             var selected = TransactionsTable.SelectedItem;
-            // Remove selected transaction
+            // Hide flyout
             RemoveTransactionFlyout.Hide();
         }
-
+        
         private class PieSegment
         {
             public string Name { get; set; }

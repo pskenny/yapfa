@@ -23,15 +23,15 @@ namespace Yapfa
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        ObservableCollection<Account> accountsList = new ObservableCollection<Account>();
-        ObservableCollection<Transaction> transactionsList = new ObservableCollection<Transaction>();
+        private ObservableCollection<Account> AccountsList = new ObservableCollection<Account>();
+        private ObservableCollection<Transaction> TransactionsList = new ObservableCollection<Transaction>();
 
         public MainPage()
         {
             this.InitializeComponent();
             this.Loaded += MainPage_Loaded;
 
-            transactionsList.CollectionChanged += TransactionListChange;
+            TransactionsList.CollectionChanged += TransactionListChange;
         }
 
         void MainPage_Loaded(object sender, RoutedEventArgs e)
@@ -43,8 +43,8 @@ namespace Yapfa
             DisplayStartupDialog();
 
             // Set item sources
-            AccountTable.ItemsSource = accountsList;
-            TransactionsTable.ItemsSource = transactionsList;
+            AccountTable.ItemsSource = AccountsList;
+            TransactionsTable.ItemsSource = TransactionsList;
 
             UpdateChart();
         }
@@ -56,7 +56,6 @@ namespace Yapfa
                 Title = "Hello",
                 Content = "What do you want to do?",
                 CloseButtonText = "Empty",
-                PrimaryButtonText = "Load File",
                 SecondaryButtonText = "Load Sample Data",
                 DefaultButton = ContentDialogButton.Secondary
             };
@@ -95,8 +94,8 @@ namespace Yapfa
                 Currency = "Euro"
             };
 
-            accountsList.Add(account1);
-            accountsList.Add(account2);
+            AccountsList.Add(account1);
+            AccountsList.Add(account2);
 
             // Make test transactions
             Transaction tr1 = new Transaction()
@@ -154,14 +153,14 @@ namespace Yapfa
 
         void AddTransaction(Transaction transaction)
         {
-            transactionsList.Add(transaction);
+            TransactionsList.Add(transaction);
 
-            for (var i = 0; i < accountsList.Count; i++)
+            for (var i = 0; i < AccountsList.Count; i++)
             {
                 // Add transaction amount to account with same name
-                if (accountsList[i].Name == transaction.Account)
+                if (AccountsList[i].Name == transaction.Account)
                 {
-                    accountsList[i].Balance += transaction.Amount;
+                    AccountsList[i].Balance += transaction.Amount;
                 }
             }
         }
@@ -171,7 +170,7 @@ namespace Yapfa
             // TODO Generate category totals for income/expenditure from transactions
             List<PieSegment> financialStuffList = new List<PieSegment>();
 
-            foreach (Transaction transaction in transactionsList)
+            foreach (Transaction transaction in TransactionsList)
             {
                 if (transaction.Amount < 0 && transaction.Category.Length > 0)
                 {

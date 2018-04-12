@@ -206,7 +206,6 @@ namespace Yapfa
 
         private void RemoveAccountConfirmation_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            var button = sender as Button;
             var selected = AccountTable.SelectedItem;
             // Remove selected transaction
             RemoveAccountFlyout.Hide();
@@ -231,7 +230,6 @@ namespace Yapfa
 
         private void RemoveTransactionConfirmation_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            var button = sender as Button;
             var selected = TransactionsTable.SelectedItem;
             // Remove selected transaction
             RemoveTransactionFlyout.Hide();

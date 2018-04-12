@@ -28,6 +28,7 @@
                 <RowDefinition Height="48"/>
             </Grid.RowDefinitions>
             
+            <!-- Accounts table -->
             <controls:DataGrid x:Name="AccountTable" SelectionMode="Single" DefaultOrderIndex="1">
                 <controls:DataGrid.Columns>
                     <controls:DataGridTextColumn Width="*" Header="Name" 
@@ -51,6 +52,7 @@
                 </controls:DataGrid.ItemDetailsTemplate>
             </controls:DataGrid>
 
+            <!--  Add, remove account buttons  -->
             <StackPanel Grid.Row="1" Orientation="Horizontal" Padding="10">
                 <Button x:Name="AddAccount" Content="Add" Tapped="AddAccount_Tapped">
                     <Button.Resources>
@@ -86,6 +88,7 @@
                 <RowDefinition Height="48"/>
             </Grid.RowDefinitions>
             
+            <!-- Transactions table -->
             <controls:DataGrid x:Name="TransactionsTable" SelectionMode="Single" DefaultOrderIndex="1" >
             <controls:DataGrid.Columns>
                 <controls:DataGridTextColumn Width="*" Header="Date" 
@@ -119,11 +122,11 @@
             </controls:DataGrid.ItemDetailsTemplate>
             </controls:DataGrid>
 
+            <!--Add, remove transaction buttons -->
             <StackPanel Grid.Row="1" Orientation="Horizontal" Padding="10">
                 <Button x:Name="AddTransactionButton" Content="Add" Tapped="AddTransaction_Tapped">
                     <Button.Resources>
                         <Flyout x:Name="AddTransactionFlyout">
-                            <!--TODO add components-->
                         </Flyout>
                     </Button.Resources>
                 </Button>
@@ -140,6 +143,7 @@
             </StackPanel>
         </Grid>
 
+        <!-- Category expenses pie chart -->
         <Grid Grid.Row="0" Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>

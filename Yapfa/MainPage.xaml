@@ -51,8 +51,7 @@
                 </controls:DataGrid.ItemDetailsTemplate>
             </controls:DataGrid>
 
-            <!--TODO Add padding-->
-            <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <StackPanel Grid.Row="1" Orientation="Horizontal" Padding="10">
                 <Button x:Name="AddAccount" Content="Add" Tapped="AddAccount_Tapped">
                     <Button.Resources>
                         <Flyout x:Name="AddAccountFlyout">
@@ -113,8 +112,7 @@
             </controls:DataGrid.ItemDetailsTemplate>
             </controls:DataGrid>
 
-            <!--TODO Add padding-->
-            <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <StackPanel Grid.Row="1" Orientation="Horizontal" Padding="10">
                 <Button x:Name="AddTransactionButton" Content="Add" Tapped="AddTransaction_Tapped">
                     <Button.Resources>
                         <Flyout x:Name="AddTransactionFlyout">

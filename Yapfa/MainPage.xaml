@@ -55,14 +55,21 @@
                 <Button x:Name="AddAccount" Content="Add" Tapped="AddAccount_Tapped">
                     <Button.Resources>
                         <Flyout x:Name="AddAccountFlyout">
-                            <!--TODO Add add contents-->
+                            <StackPanel>
+                                <TextBox Header="Name"/>
+                                <TextBox Header="Initial Balance"/>
+                                <TextBox Header="Currency"/>
+                            </StackPanel>
                         </Flyout>
                     </Button.Resources>
                 </Button>
                 <Button x:Name="RemoveAccount" Content="Remove" Tapped="RemoveAccount_Tapped">
                     <Button.Resources>
                         <Flyout x:Name="RemoveAccountFlyout">
-                            <!--TODO Add remove content-->
+                            <StackPanel>
+                                <TextBlock Text="Are you sure?"></TextBlock>
+                                <Button Content="Yes" Tapped="RemoveAccountConfirmation_Tapped"></Button>
+                            </StackPanel>
                         </Flyout>
                     </Button.Resources>
                 </Button>
@@ -116,14 +123,17 @@
                 <Button x:Name="AddTransactionButton" Content="Add" Tapped="AddTransaction_Tapped">
                     <Button.Resources>
                         <Flyout x:Name="AddTransactionFlyout">
-                            <!--TODO Add add contents-->
+                            <!--TODO add components-->
                         </Flyout>
                     </Button.Resources>
                 </Button>
                 <Button x:Name="RemoveTransactionButton" Content="Remove" Tapped="RemoveTransaction_Tapped">
                     <Button.Resources>
                         <Flyout x:Name="RemoveTransactionFlyout">
-                            <!--TODO Add remove content-->
+                            <StackPanel>
+                                <TextBlock Text="Are you sure?"></TextBlock>
+                                <Button Content="Yes" Tapped="RemoveTransactionConfirmation_Tapped"></Button>
+                            </StackPanel>
                         </Flyout>
                     </Button.Resources>
                 </Button>
